@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OHLC Chart</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+      #chart { width: 800px; height: 400px; }
+    </style>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script>
+      const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+        layout: { backgroundColor: '#000', textColor: '#fff' },
+        grid: { vertLines: { color: '#444' }, horzLines: { color: '#444' } },
+      });
+
+      const candleSeries = chart.addCandlestickSeries();
+
+      // Sample OHLC data
+      const ohlcData = [
+        { time: '2025-06-24T12:00:00.000Z', open: 5, high: 5.2, low: 4.9, close: 5.1 },
+        { time: '2025-06-24T12:01:00.000Z', open: 5.1, high: 5.3, low: 5.0, close: 5.2 }
+      ];
+
+      // Convert to UNIX timestamp format
+      const formatted = ohlcData.map(d => ({
+        time: Math.floor(new Date(d.time).getTime() / 1000),
+        open: d.open,
+        high: d.high,
+        low: d.low,
+        close: d.close
+      }));
+
+      candleSeries.setData(formatted);
+
+      // Example: update live candle
+      setInterval(() => {
+        const last = formatted[formatted.length - 1];
+        const newCandle = {
+          time: last.time + 60, // +1 min
+          open: last.close,
+          high: last.close + 0.1,
+          low: last.close - 0.1,
+          close: last.close + (Math.random() > 0.5 ? 0.05 : -0.05)
+        };
+        formatted.push(newCandle);
+        candleSeries.update(newCandle);
+      }, 5000); // every 5 sec
+    </script>
+  </body>
+</html>
