@@ -80,3 +80,7 @@ getDevHolding("DevWalletAddressHere", "TokenMintAddressHere");
 ▶️ Run It
 
 node index.js
+
+## for free trails of graphql you can visit bitquery website 
+## create your own api key which allow you 10,000 calls each call take 231 deducation point 
+## visit the link  = https://docs.bitquery.io/docs/examples/Solana/Pump-Fun-API/#get-token-metadata-dev-address-creation-time-for-specific-token
